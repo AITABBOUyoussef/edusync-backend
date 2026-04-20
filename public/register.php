@@ -8,7 +8,7 @@ include '../includes/header.php';
         
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2">Nom </label>
-            <input type="text" name="nom" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-pink-500" required>
+            <input type="text" name="nom" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-pink-500" >
         </div>
 
         <div class="mb-4">
