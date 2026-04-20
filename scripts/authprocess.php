@@ -5,8 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-if (empty($nom) || empty($prenom) ||empty($email) ||empty($password)){
-    header("Location : ..public/register.php?error=empty_fields");
+if (empty($nom) || empty($prenom) ||empty($email) ||empty($password)){ //empty===wach khawi
+    header("Location: ..public/register.php?error=empty_fields"); //=>  GET Parameter
 exit();
     
 }else {
@@ -19,7 +19,7 @@ exit();
         echo "</div>";
 }
 }else{
-    header("Location : ../public/register.php");
+    header("Location: ../public/register.php");
     exit();
 }
 
