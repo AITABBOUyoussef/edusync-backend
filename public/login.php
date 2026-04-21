@@ -1,5 +1,5 @@
 <?php 
-require_once '../includes/header.php0';
+require_once '../includes/header.php';
 ?>
 
 <div class="max-w-md mx-auto mt-10 bg-white p-8 border border-gray-200 rounded-lg shadow-sm">
