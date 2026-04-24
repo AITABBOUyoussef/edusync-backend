@@ -3,8 +3,8 @@ session_start();
 if(!isset($_SESSION['user']))
 {
     header('Location:login.php');
-    exit(); // هادي زدتها ليك غير باش السيرفر يحبس وميكملش قراية الديزاين يلا كان اليوزر مامكونيكطيش
-}
+    exit(); 
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
