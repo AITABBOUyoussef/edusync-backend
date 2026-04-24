@@ -27,5 +27,4 @@ EduSync est une application web développée en PHP natif et MySQL. Ce projet se
 4. Lancez les modules Apache et MySQL sur XAMPP.
 5. Accédez à l'application via : `http://localhost/edu/login.php`
 
-## 👥 Équipe du Projet
-* **YAFA tech** * Lead Développeur : **Youssef Ait Abo**
+## **Youssef Ait Abo**
