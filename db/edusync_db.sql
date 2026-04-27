@@ -1,5 +1,6 @@
+-- Active: 1777286959087@@127.0.0.1@3306
 -- إنشاء قاعدة البيانات يلا ماكانتش
-CREATE DATABASE IF NOT EXISTS edu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE edu ;
 USE edu;
 
 -- ==========================================
