@@ -1,5 +1,7 @@
+
 <?php 
 require "inclu/connect.php";
+include "indexx.php";
     
 $error = '';
 if($_SERVER["REQUEST_METHOD"] === "POST"){

@@ -1,10 +1,28 @@
 <?php  
 session_start();
+require "../inclu/connect.php";
 // Middleware de sécurité : Vérifier si connecté ET si c'est un Prof
 if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
     header('Location: ../login.php');
     exit(); 
 }
+
+$professeur_id = $_SESSION['user_id'] ;
+try {
+    $requete = "SELECT * FROM courses WHERE professeur_id = :prof_cours";
+$stmt = $con->prepare($requete);
+
+$stmt->execute([
+    ':prof_cours' => $professeur_id
+]);
+
+$mes_cours = $stmt->fetchAll(PDO::FETCH_OBJ);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -47,8 +65,15 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-400 transition duration-300">
                 <div class="text-4xl mb-4">📚</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Mes Enseignements</h3>
-                <p class="text-gray-500 text-sm mb-4">Voir la liste exclusive des cours qui me sont assignés et les détails des classes.</p>
-                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center">Afficher mes cours &rarr;</a>
+                <p class="text-gray-500 text-sm mb-4">Voir la liste exclusive des cours qui me sont assignés et les détails des classes.
+                    <?php echo htmlspecialchars($_SESSION['usernom']); ?>
+                </p>
+
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center"><?php 
+               foreach($mes_cours as $cour){
+   
+    echo  htmlspecialchars($_SESSION['usernom']). "  ==> nom de cour  :" .$cour->nom."<br>";
+} ?></a>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-400 transition duration-300">
