@@ -8,9 +8,12 @@ if(isset($_SESSION['user'])) {
 
 require "inclu/connect.php";
     
+
+$error = "";
+
 if (isset($_POST["submit"])) {
     
-$email = $_POST["email"];
+$email = trim($_POST["email"]);
     $password = $_POST["password"];
 
     $req = "SELECT * FROM users WHERE email = :email";
