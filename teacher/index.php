@@ -23,6 +23,24 @@ $mes_cours = $stmt->fetchAll(PDO::FETCH_OBJ);
 
 
 
+
+
+foreach($mes_cours as $cour){
+    // $id_cours=$cour->id  ;
+
+try {
+    $requete = "SELECT * FROM enrollments WHERE cours_id = :id_etu ";
+$stmt = $con->prepare($requete);
+
+$stmt->execute([
+    ':id_etu' => $cour->id 
+]);
+
+$mes_etu = $stmt->fetchAll(PDO::FETCH_OBJ);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -69,18 +87,27 @@ $mes_cours = $stmt->fetchAll(PDO::FETCH_OBJ);
                     <?php echo htmlspecialchars($_SESSION['usernom']); ?>
                 </p>
 
-                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center"><?php 
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center">
+                    <?php 
                foreach($mes_cours as $cour){
    
-    echo  htmlspecialchars($_SESSION['usernom']). "  ==> nom de cour  :" .$cour->nom."<br>";
-} ?></a>
+    echo  $cour->nom."<br>";
+} ?>
+</a>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-400 transition duration-300">
                 <div class="text-4xl mb-4">📝</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Gestion des Effectifs</h3>
                 <p class="text-gray-500 text-sm mb-4">Suivre les étudiants inscrits et modifier leur statut pédagogique (Actif/Terminé).</p>
-                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center">Gérer les étudiants &rarr;</a>
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center">
+
+                  <?php 
+               foreach($mes_etu as $etu){
+   
+    echo  $etu->etudiant_id."<br>";
+} ?>
+                </a>
             </div>
 
         </div>
