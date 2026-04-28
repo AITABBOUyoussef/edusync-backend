@@ -133,10 +133,19 @@
                 <div class="flex items-center space-x-3">
                     <!-- Window Controls -->
                     <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg">
+                        <button onclick="minimizeWindow()" class="p-2 hover:bg-yellow-100 rounded transition" title="Réduire">
+                            <i class="fa-solid fa-window-minimize text-yellow-600 text-sm"></i>
+                        </button>
+                        <button onclick="" class="p-2 hover:bg-green-100 rounded transition" title="Agrandir">
+                            <i class="fa-solid fa-window-maximize text-green-600 text-sm"></i>
+                        </button>
                         <button onclick="" class="p-2 hover:bg-red-100 rounded transition" title="Fermer">
-                            Log out
+                            <i class="fa-solid fa-xmark text-red-600 text-sm"></i>
                         </button>
                     </div>
+                    <button onclick="" class="bg-gray-100 p-2 rounded-lg hover:bg-gray-200 transition">
+                        <i class="fa-solid fa-rotate text-gray-600"></i>
+                    </button>
                 </div>
             </div>
         </header>
@@ -389,52 +398,35 @@
                     <i class="fa-solid fa-times"></i>
                 </button>
             </div>
-            <form  action='../inscription.php' id="userForm" class="space-y-4"  method="POST">
-    <input type="hidden" id="userId">
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
-        <input  type="text" name="nom"  type="text" id="userName" required placeholder="ex: Ahmed Bennani" 
-               class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-        <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma" 
-               class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-        <select id="userRole" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
-            <option value="">Sélectionner un rôle</option>
-            <option value="Professeur">Professeur</option>
-            <option value="Étudiant">Étudiant</option>
-        </select>
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
-        <div class="relative">
-            <input type="password" id="userPassword" required placeholder="Minimum 8 caractères" 
-                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12"
-                   minlength="8">
-        </div>
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
-        <div class="relative">
-            <input type="password" id="userConfirmPassword" required placeholder="Répéter le mot de passe" 
-                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12">
-            
-        </div>
-        <p id="passwordMatchMessage" class="text-xs mt-1 hidden"></p>
-    </div>
-    <div class="flex space-x-3">
-        <button type="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
-            <i class="fa-solid fa-save mr-2"></i> Enregistrer
-        </button>
-        <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
-            Annuler
-        </button>
-    </div>
-</form>
+            <form id="userForm" class="space-y-4">
+                <input type="hidden" id="userId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
+                    <input type="text" id="userName" required placeholder="ex: Ahmed Bennani" 
+                           class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="userEmail" required placeholder="ex: ahmed@edusync.ma" 
+                           class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
+                    <select id="userRole" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
+                        <option value="">Sélectionner un rôle</option>
+                        <option value="Professeur">Professeur</option>
+                        <option value="Étudiant">Étudiant</option>
+                    </select>
+                </div>
+                <div class="flex space-x-3">
+                    <button type="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
+                        <i class="fa-solid fa-save mr-2"></i> Enregistrer
+                    </button>
+                    <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                        Annuler
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -442,7 +434,156 @@
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 space-y-3"></div>
 
     <script>
-function openUserModal(userId = null) {
+        // ===== DATA MANAGEMENT SYSTEM =====
+        
+        // Initialize database
+      
+        // US19: Update statistics
+        function updateStatistics() {
+            const stats = db.getStatistics();
+            document.getElementById('totalStudents').textContent = stats.totalStudents;
+            document.getElementById('totalCourses').textContent = stats.totalCourses;
+            document.getElementById('totalClasses').textContent = stats.totalClasses;
+            
+            // Update class distribution
+            const distributionDiv = document.getElementById('classDistribution');
+            distributionDiv.innerHTML = db.classes.map(cls => `
+                <div class="bg-gradient-to-br from-gray-50 to-white p-4 rounded-xl border border-gray-200 text-center">
+                    <p class="text-xs text-gray-500 uppercase font-bold">${cls.name}</p>
+                    <p class="text-2xl font-bold text-gray-800">${cls.studentCount} 
+                        <span class="text-sm font-normal text-gray-400">élèves</span>
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">${cls.room}</p>
+                </div>
+            `).join('');
+        }
+
+        // US15: Update users table
+        function updateUsersTable(filterText = '', filterRole = '') {
+            const filtered = db.users.filter(user => {
+                const matchesSearch = user.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                                    user.email.toLowerCase().includes(filterText.toLowerCase());
+                const matchesRole = !filterRole || user.role === filterRole;
+                return matchesSearch && matchesRole;
+            });
+            
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = filtered.map(user => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">#${user.id}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                ${user.name.charAt(0)}
+                            </div>
+                            <span class="font-medium text-gray-800">${user.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full text-white ${user.role === 'Professeur' ? 'badge-prof' : 'badge-etudiant'}">
+                            ${user.role}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">${user.email}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${user.createdAt}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="editUser(${user.id})" class="text-blue-600 hover:text-blue-800 mr-3 transition">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-800 transition">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Update dropdowns
+            updateDropdowns();
+        }
+
+        // Update all dropdowns
+        function updateDropdowns() {
+            // Professor dropdown for courses
+            const profSelect = document.getElementById('professorSelect');
+            profSelect.innerHTML = '<option value="">Sélectionner un professeur</option>' +
+                db.getProfessors().map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+            
+            // Student dropdown for enrollments
+            const studentSelect = document.getElementById('studentSelect');
+            studentSelect.innerHTML = '<option value="">Sélectionner un étudiant</option>' +
+                db.getStudents().map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            
+            // Course dropdown for enrollments
+            const courseSelect = document.getElementById('courseSelect');
+            courseSelect.innerHTML = '<option value="">Sélectionner un cours</option>' +
+                db.courses.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        // Update classes list
+        function updateClassesList() {
+            const classesList = document.getElementById('classesList');
+            classesList.innerHTML = db.classes.map(cls => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                        <p class="font-medium text-gray-800">${cls.name}</p>
+                        <p class="text-sm text-gray-500">${cls.room} • ${cls.studentCount} élèves</p>
+                    </div>
+                    <span class="text-xs font-mono text-gray-400">${cls.id}</span>
+                </div>
+            `).join('');
+        }
+
+        // Update courses list
+        function updateCoursesList() {
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = db.courses.map(course => {
+                const professor = db.users.find(u => u.id === course.professorId);
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <p class="font-medium text-gray-800">${course.name}</p>
+                            <p class="text-sm text-gray-500">Prof: ${professor ? professor.name : 'Non assigné'}</p>
+                        </div>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Actif</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update enrollments table
+        function updateEnrollmentsTable() {
+            const tbody = document.getElementById('enrollmentsTableBody');
+            tbody.innerHTML = db.enrollments.map(enrollment => {
+                const student = db.users.find(u => u.id === enrollment.studentId);
+                const course = db.courses.find(c => c.id === enrollment.courseId);
+                return `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-4 py-3 text-sm">#${enrollment.id}</td>
+                        <td class="px-4 py-3 text-sm font-medium">${student ? student.name : 'Inconnu'}</td>
+                        <td class="px-4 py-3 text-sm">${course ? course.name : 'Inconnu'}</td>
+                        <td class="px-4 py-3 text-sm text-gray-500">${enrollment.date}</td>
+                        <td class="px-4 py-3 text-right">
+                            <button onclick="deleteEnrollment(${enrollment.id})" class="text-red-600 hover:text-red-800">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Refresh all UI
+        function refreshAll() {
+            updateStatistics();
+            updateUsersTable();
+            updateClassesList();
+            updateCoursesList();
+            updateEnrollmentsTable();
+            updateDropdowns();
+        }
+
+        // ===== USER ACTIONS =====
+        function openUserModal(userId = null) {
             const modal = document.getElementById('userModal');
             const title = document.getElementById('modalTitle');
             const form = document.getElementById('userForm');
@@ -472,8 +613,209 @@ function openUserModal(userId = null) {
             modal.classList.remove('flex');
         }
 
+        function editUser(userId) {
+            openUserModal(userId);
+        }
 
+        function deleteUser(userId) {
+            const user = db.users.find(u => u.id === userId);
+            if (user && confirm(`Êtes-vous sûr de vouloir supprimer ${user.name} ?`)) {
+                db.deleteUser(userId);
+                refreshAll();
+                showToast('Utilisateur supprimé avec succès', 'success');
+            }
+        }
+
+        // User form submission
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = document.getElementById('userId').value;
+            const userData = {
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value,
+                role: document.getElementById('userRole').value
+            };
+            
+            if (userId) {
+                db.updateUser(parseInt(userId), userData);
+                showToast('Utilisateur modifié avec succès', 'success');
+            } else {
+                db.addUser(userData);
+                showToast('Utilisateur créé avec succès', 'success');
+            }
+            
+            closeUserModal();
+            refreshAll();
+        });
+
+        // ===== CLASS ACTIONS =====
+        document.getElementById('classForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const classData = {
+                id: document.getElementById('classId').value,
+                name: document.getElementById('className').value,
+                room: document.getElementById('classRoom').value
+            };
+            
+            if (db.classes.find(c => c.id === classData.id)) {
+                showToast('Cette ID de classe existe déjà', 'error');
+                return;
+            }
+            
+            db.addClass(classData);
+            this.reset();
+            refreshAll();
+            showToast('Classe créée avec succès', 'success');
+        });
+
+        // ===== COURSE ACTIONS =====
+        document.getElementById('courseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const courseData = {
+                name: document.getElementById('courseName').value,
+                professorId: parseInt(document.getElementById('professorSelect').value),
+                description: document.getElementById('courseDescription').value
+            };
+            
+            if (!courseData.professorId) {
+                showToast('Veuillez sélectionner un professeur', 'error');
+                return;
+            }
+            
+            db.addCourse(courseData);
+            this.reset();
+            refreshAll();
+            showToast('Cours créé avec succès', 'success');
+        });
+
+        // ===== ENROLLMENT ACTIONS =====
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const studentId = document.getElementById('studentSelect').value;
+            const courseId = document.getElementById('courseSelect').value;
+            
+            if (!studentId || !courseId) {
+                showToast('Veuillez sélectionner un étudiant et un cours', 'error');
+                return;
+            }
+            
+            // Check if already enrolled
+            const exists = db.enrollments.find(e => 
+                e.studentId === parseInt(studentId) && e.courseId === parseInt(courseId)
+            );
+            
+            if (exists) {
+                showToast('Cet étudiant est déjà inscrit à ce cours', 'error');
+                return;
+            }
+            
+            db.addEnrollment(studentId, courseId);
+            this.reset();
+            refreshAll();
+            showToast('Inscription validée avec succès', 'success');
+        });
+
+        function deleteEnrollment(enrollmentId) {
+            if (confirm('Supprimer cette inscription ?')) {
+                db.deleteEnrollment(enrollmentId);
+                refreshAll();
+                showToast('Inscription supprimée', 'success');
+            }
+        }
+
+        // ===== SEARCH & FILTER =====
+        document.getElementById('searchUser').addEventListener('input', function(e) {
+            updateUsersTable(e.target.value, document.getElementById('filterRole').value);
+        });
+
+        document.getElementById('filterRole').addEventListener('change', function(e) {
+            updateUsersTable(document.getElementById('searchUser').value, e.target.value);
+        });
+
+        
+        function highlightStat(type) {
+            showToast(`Détails pour ${type}`, 'info');
+        }
+
+        // ===== TOAST NOTIFICATIONS =====
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const id = Date.now();
+            
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                warning: 'bg-yellow-500',
+                info: 'bg-blue-500'
+            };
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            
+            const toast = document.createElement('div');
+            toast.id = `toast-${id}`;
+            toast.className = `${colors[type]} text-white px-6 py-4 rounded-xl shadow-lg flex items-center space-x-3 slide-in`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icons[type]} text-xl"></i>
+                <span class="font-medium">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                const element = document.getElementById(`toast-${id}`);
+                if (element) {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateX(100px)';
+                    element.style.transition = 'all 0.3s ease';
+                    setTimeout(() => element.remove(), 300);
+                }
+            }, 3000);
+        }
+
+        // ===== NAVIGATION =====
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => {
+                    l.classList.remove('text-pink-600', 'bg-pink-50');
+                    l.classList.add('text-gray-600');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('text-pink-600', 'bg-pink-50');
+                this.classList.remove('text-gray-600');
+                
+                // Scroll to section
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== INITIALIZATION =====
+        function initialize() {
+            refreshAll(); 
+            // Close modal on overlay click
+            document.getElementById('userModal').addEventListener('click', function(e) {
+                if (e.target === this) closeUserModal();
+            });
+        }
+
+        // Start the application
+        initialize();
     </script>
-    
 </body>
 </html>
