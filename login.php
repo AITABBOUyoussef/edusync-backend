@@ -13,8 +13,6 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
 }
 
 
-    
-
 $error = "";
 
 if (isset($_POST["submit"])) {
@@ -58,7 +56,6 @@ $email = trim($_POST["email"]);
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">

@@ -48,24 +48,31 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
                 <div class="text-4xl mb-4">📖</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Mon Programme</h3>
                 <p class="text-gray-500 text-sm mb-4">Consulter la liste de mes cours et les détails des modules (Volume horaire, etc.).</p>
-                <a href="#" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">Voir mes cours &rarr;</a>
+<a href="program.php" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">
+    Voir mes cours →
+</a>
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-pink-300 transition duration-300">
                 <div class="text-4xl mb-4">🤝</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Ma Promotion</h3>
                 <p class="text-gray-500 text-sm mb-4">Voir la liste de mes camarades de classe pour faciliter le travail en groupe.</p>
-                <a href="#" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">Voir ma classe &rarr;</a>
+                <a href="class.php" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">
+    Voir ma classe →
+</a>
+
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-pink-300 transition duration-300">
                 <div class="text-4xl mb-4">👤</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Mon Profil</h3>
                 <p class="text-gray-500 text-sm mb-4">Visualiser mes informations personnelles et le statut de mon cursus pédagogique.</p>
-                <a href="#" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">Mon compte &rarr;</a>
+                <a href="profile.php" class="text-pink-600 font-semibold hover:text-pink-700 flex items-center">
+    Mon compte →
+</a>
             </div>
 
         </div>
     </main>
 </body>
-</html>
+</html>zip_entry_open
