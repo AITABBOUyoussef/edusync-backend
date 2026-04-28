@@ -1,16 +1,16 @@
 <?php 
 session_start();
 require "inclu/connect.php";
-if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-     if($_SESSION['role']==='admin')
-                header('Location: admin/index.php');
+// if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+//      if($_SESSION['role']==='admin')
+//                 header('Location: admin/index.php');
             
-            elseif($_SESSION['role']==='teacher')
-                header('Location: teacher/index.php');
+//             elseif($_SESSION['role']==='teacher')
+//                 header('Location: teacher/index.php');
             
-    header('Location: student/index.php');
-    exit();
-}
+//     header('Location: student/index.php');
+//     exit();
+// }
 
 
 $error = "";
