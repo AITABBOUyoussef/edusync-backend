@@ -75,4 +75,4 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
         </div>
     </main>
 </body>
-</html>zip_entry_open
+</html>
