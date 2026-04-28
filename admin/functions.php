@@ -11,9 +11,9 @@ function adduser($conn,$fullName,$Email,$password, $role){
 }
 function deletuser($id,$conn){
     try{
-$sql="DELETE FROM users WHERE id=?";
-$stm=$conn->prepare($sql);
-$stm->execute([$id]);
+        $sql="DELETE FROM users WHERE id=?";
+        $stm=$conn->prepare($sql);
+        $stm->execute([$id]);
     }
     catch (PDOException $e){
         echo $e->getMessage();
@@ -28,5 +28,29 @@ function modifyuser($fullName,$email,$password,$role,$conn,$id){
     }
     catch (PDOException $e) {
         echo $e->getMessage();
+    }
+}
+
+function createClass($conn,$name,$salle){
+    try {
+        $sql = "INSERT INTO classes(nom,salle) VALUES (?,?) ";
+        $stm=$conn->prepare($sql);
+        $stm->execute([$name,$salle]);  
+    } catch(PDOException $e) {
+            echo $e->getMessage();
+    }
+}
+function createCours($conn,$name,$description,$profid){
+    try {
+        $sql = "INSERT INTO courses(nom,description,volume_horaire,professeur_id) VALUES (?,?,?,?)";
+        $stm=$conn->prepare($sql);
+        $stm->execute([$name,$description,10,$profid]);
+    } catch(PDOException $e) {
+            echo $e->getMessage();
+    }
+}
+function getAllStudents(){
+    try {
+        $sql = "";
     }
 }
