@@ -35,6 +35,7 @@ try {
     echo $e->getMessage();
 }
 
+
 if(isset($_POST['marquer_termine'])){
     try {
         $id_etudiant = $_POST['id_etudiant'];
