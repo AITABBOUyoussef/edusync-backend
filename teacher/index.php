@@ -115,7 +115,9 @@ if(isset($_POST['marquer_termine'])){
                 <div class="text-4xl mb-4">📝</div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Gestion des Effectifs</h3>
                 <p class="text-gray-500 text-sm mb-6">Suivez les étudiants inscrits et mettez à jour leur statut.</p>
-
+<p class="text-sm font-medium text-gray-600 mb-4">
+    Vous avez actuellement <span class="text-blue-600 font-bold"><?php echo count($mes_etu); ?></span> élèves inscrits dans vos modules.
+</p>
                 <div class="max-h-[500px] overflow-y-auto pr-2 space-y-4">
                     <?php if(count($mes_etu) > 0): ?>
                         <?php foreach($mes_etu as $etu): ?>
