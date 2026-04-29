@@ -63,12 +63,25 @@ function getAllUsers($conn,$role){
 
 function getCours($conn){
     try {
-        $sql = "SELECT nom,description FROM courses ";
+        $sql = "SELECT id,nom,description FROM courses ";
         $stm = $conn->prepare($sql);
         $stm->execute();
         $courses = $stm->fetchAll();
         return $courses ;
     } catch(PDOException $e) {
             echo $e->getMessage();
+    }
+}
+function repartitionStudent($conn,$id_classe){
+    try{
+        $sql="SELECT classe_id,COUNT(id) from users WHERE role='?' GROUP BY classe_id";
+        $stm=$conn->prepare($sql);
+        $stm->execute(["student"]);
+        $total=$stm->fetchALL();
+        return $total;
+    }
+    catch(PDOEXception $e){
+        echo $e->getMessage();
+
     }
 }
