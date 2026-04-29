@@ -389,54 +389,55 @@
                     <i class="fa-solid fa-times"></i>
                 </button>
             </div>
-            <form  action='../inscription.php' id="userForm" class="space-y-4"  method="POST">
-    <input type="hidden" id="userId">
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
-        <input  type="text" name="nom"  type="text" id="userName" required placeholder="ex: Ahmed Bennani" 
-               class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-        <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma" 
-               class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-        <select id="userRole" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
-            <option value="">Sélectionner un rôle</option>
-            <option value="Professeur">Professeur</option>
-            <option value="Étudiant">Étudiant</option>
-        </select>
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
-        <div class="relative">
-            <input type="password" id="userPassword" required placeholder="Minimum 8 caractères" 
-                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12"
-                   minlength="8">
+        <form  action='managementUsers.php' id="userForm" class="space-y-4"  method="POST">
+            <input type="hidden" id="userId">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
+                <input  type="text" name="nom"  type="text" id="userName" required placeholder="ex: Ahmed Bennani" 
+                    class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma" 
+                    class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
+                <select id="userRole" name="role" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
+                    <option value="">Sélectionner un rôle</option>
+                    <option value="Professeur">Professeur</option>
+                    <option value="Étudiant">Étudiant</option>
+                    <option value="admin">admin</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                <div class="relative">
+                    <input type="password" id="userPassword" name="password" required placeholder="Minimum 8 caractères" 
+                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12"
+                        minlength="8">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
+                <div class="relative">
+                    <input type="password" id="userConfirmPassword" name="confirmpass" required placeholder="Répéter le mot de passe" 
+                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12">
+                    
+                </div>
+                <p id="passwordMatchMessage" class="text-xs mt-1 hidden"></p>
+            </div>
+            <div class="flex space-x-3">
+                <button type="submit" name="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
+                    <i class="fa-solid fa-save mr-2"></i> Enregistrer
+                </button>
+                <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                    Annuler
+                </button>
+            </div>
+        </form>
         </div>
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
-        <div class="relative">
-            <input type="password" id="userConfirmPassword" required placeholder="Répéter le mot de passe" 
-                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12">
-            
-        </div>
-        <p id="passwordMatchMessage" class="text-xs mt-1 hidden"></p>
-    </div>
-    <div class="flex space-x-3">
-        <button type="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
-            <i class="fa-solid fa-save mr-2"></i> Enregistrer
-        </button>
-        <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
-            Annuler
-        </button>
-    </div>
-</form>
-        </div>
-    </div>
+</div>
 
     <!-- Toast notifications -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 space-y-3"></div>
