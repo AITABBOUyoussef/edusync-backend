@@ -49,8 +49,26 @@ function createCours($conn,$name,$description,$profid){
             echo $e->getMessage();
     }
 }
-function getAllStudents(){
+function getAllUsers($conn,$role){
     try {
-        $sql = "";
+        $sql = "SELECT id,nom,email FROM users WHERE role = ?";
+        $stm=$conn->prepare($sql);
+        $stm->execute([$role]);
+        $users= $stm->fetchAll();
+        return $users;
+    } catch(PDOException $e) {
+            echo $e->getMessage();
+    }
+}
+
+function getCours($conn){
+    try {
+        $sql = "SELECT nom,description FROM courses ";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $courses = $stm->fetchAll();
+        return $courses ;
+    } catch(PDOException $e) {
+            echo $e->getMessage();
     }
 }
