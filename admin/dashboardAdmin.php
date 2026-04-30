@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +9,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         * {
             font-family: 'Inter', system-ui, sans-serif;
         }
-        
+
         .transition-all {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .hover-scale {
             transition: transform 0.2s ease;
         }
-        
+
         .hover-scale:hover {
             transform: translateY(-2px);
         }
-        
+
         .stat-card {
             position: relative;
             overflow: hidden;
         }
-        
+
         .stat-card::before {
             content: '';
             position: absolute;
@@ -39,45 +40,63 @@
             height: 4px;
             background: linear-gradient(90deg, #ec4899, #8b5cf6);
         }
-        
+
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
         }
-        
+
         .pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-        
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
-        
+
         .slide-in {
             animation: slideIn 0.3s ease-out;
         }
-        
+
         @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .badge-prof {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
         }
-        
+
         .badge-etudiant {
             background: linear-gradient(135deg, #10b981, #059669);
         }
     </style>
 </head>
+<?php
+include 'functions.php';
+include 'connectDB.php';
+$conn = ConnectionDb();
+$users = getAllUsers($conn, "student");
+
+
+
+?>
+
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans flex min-h-screen">
 
     <!-- Sidebar améliorée -->
@@ -86,7 +105,7 @@
             <h1 class="text-3xl font-bold">EduSync</h1>
             <p class="text-pink-100 text-sm mt-1">Administration Pro</p>
         </div>
-        
+
         <nav class="flex-1 px-4 py-6 space-y-1">
             <a href="#overview" class="nav-link flex items-center px-4 py-3 text-pink-600 bg-pink-50 rounded-xl mb-1 font-medium">
                 <i class="fa-solid fa-chart-pie mr-3"></i> Vue d'ensemble
@@ -104,7 +123,7 @@
                 <i class="fa-solid fa-user-plus mr-3"></i> Inscriptions
             </a>
         </nav>
-        
+
         <div class="p-4 border-t border-gray-100">
             <div class="flex items-center space-x-3 mb-4 p-3 bg-gray-50 rounded-xl">
                 <div class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold">
@@ -163,7 +182,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card bg-white p-6 rounded-2xl shadow-sm hover-scale cursor-pointer" onclick="highlightStat('courses')">
                         <div class="flex items-center justify-between">
                             <div>
@@ -178,7 +197,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card bg-white p-6 rounded-2xl shadow-sm hover-scale cursor-pointer" onclick="highlightStat('classes')">
                         <div class="flex items-center justify-between">
                             <div>
@@ -217,12 +236,12 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="p-4 bg-gray-50 flex gap-4 flex-wrap">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
-                        <input type="text" id="searchUser" placeholder="Rechercher par nom ou email..." 
-                               class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+                        <input type="text" id="searchUser" placeholder="Rechercher par nom ou email..."
+                            class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                     </div>
                     <select id="filterRole" class="border border-gray-300 rounded-xl px-4 py-2.5 focus:border-pink-500 outline-none">
                         <option value="">Tous les rôles</option>
@@ -230,7 +249,7 @@
                         <option value="Étudiant">Étudiants</option>
                     </select>
                 </div>
-                
+
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50">
@@ -244,7 +263,46 @@
                             </tr>
                         </thead>
                         <tbody id="usersTableBody" class="divide-y divide-gray-100">
-                            <!-- Dynamic content -->
+           <?php foreach($users as $user) : ?>
+    <tr class="hover:bg-gray-50 transition">
+        <!-- ID Column -->
+        <td class="px-6 py-4 text-sm font-medium text-gray-900">#<?= $user['id'] ?></td>
+        
+        <!-- Name Column with Avatar -->
+        <td class="px-6 py-4">
+            <div class="flex items-center">
+                <div class="w-8 h-8 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                    <?= strtoupper(substr($user['nom'], 0, 1)) ?>
+                </div>
+                <span class="font-medium text-gray-800"><?= htmlspecialchars($user['nom']) ?></span>
+            </div>
+        </td>
+        
+        <!-- Role Column with Dynamic Badges -->
+        <td class="px-6 py-4">
+            <?=  $user['role'] ?> ?>
+ 
+        </td>
+        
+        <!-- Email Column -->
+        <td class="px-6 py-4 text-sm text-gray-600"><?= htmlspecialchars($user['email']) ?></td>
+        
+        <!-- Class ID Column (Added based on your table) -->
+        <td class="px-6 py-4 text-sm text-gray-500">
+            <?= $user['classe_id'] ? "Classe " . $user['classe_id'] : '—' ?>
+        </td>
+        
+        <!-- Actions -->
+        <td class="px-6 py-4 text-right">
+            <button onclick="editUser(<?= $user['id'] ?>)" class="text-blue-600 hover:text-blue-800 mr-3 transition">
+                <i class="fa-solid fa-edit"></i>
+            </button>
+            <button onclick="deleteUser(<?= $user['id'] ?>)" class="text-red-600 hover:text-red-800 transition">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </td>
+    </tr>
+<?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -261,24 +319,24 @@
                     <form id="classForm" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">ID de la Classe</label>
-                            <input type="text" id="classId" placeholder="ex: CLS-001" 
-                                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
+                            <input type="text" id="classId" placeholder="ex: CLS-001"
+                                class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la Classe</label>
-                            <input type="text" id="className" placeholder="ex: Terminale Scientifique A" 
-                                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
+                            <input type="text" id="className" placeholder="ex: Terminale Scientifique A"
+                                class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Salle</label>
-                            <input type="text" id="classRoom" placeholder="ex: Salle 301" 
-                                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
+                            <input type="text" id="classRoom" placeholder="ex: Salle 301"
+                                class="w-full border border-gray-300 p-3 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition">
                         </div>
                         <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition transform hover:scale-105">
                             <i class="fa-solid fa-plus mr-2"></i> Créer la Classe
                         </button>
                     </form>
-                    
+
                     <!-- Liste des classes -->
                     <div class="mt-6">
                         <h4 class="font-semibold text-gray-700 mb-3">Classes Existantes</h4>
@@ -297,8 +355,8 @@
                     <form id="courseForm" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Matière</label>
-                            <input type="text" id="courseName" placeholder="ex: Mathématiques Avancées" 
-                                   class="w-full border border-gray-300 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+                            <input type="text" id="courseName" placeholder="ex: Mathématiques Avancées"
+                                class="w-full border border-gray-300 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Professeur Responsable</label>
@@ -309,14 +367,14 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                            <textarea id="courseDescription" rows="2" placeholder="Description du cours..." 
-                                      class="w-full border border-gray-300 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition"></textarea>
+                            <textarea id="courseDescription" rows="2" placeholder="Description du cours..."
+                                class="w-full border border-gray-300 p-3 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition"></textarea>
                         </div>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition transform hover:scale-105">
                             <i class="fa-solid fa-plus mr-2"></i> Créer le Cours
                         </button>
                     </form>
-                    
+
                     <!-- Liste des cours -->
                     <div class="mt-6">
                         <h4 class="font-semibold text-gray-700 mb-3">Cours Existants</h4>
@@ -333,7 +391,7 @@
                     <i class="fa-solid fa-user-plus text-green-600 mr-2"></i>
                     Inscription aux Cours (US18)
                 </h3>
-                
+
                 <form id="enrollmentForm" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Étudiant</label>
@@ -355,7 +413,7 @@
                         </button>
                     </div>
                 </form>
-                
+
                 <!-- Liste des inscriptions -->
                 <div>
                     <h4 class="font-semibold text-gray-700 mb-3">Inscriptions Récentes</h4>
@@ -389,65 +447,65 @@
                     <i class="fa-solid fa-times"></i>
                 </button>
             </div>
-        <form  action='managementUsers.php' id="userForm" class="space-y-4"  method="POST">
-            <input type="hidden" id="userId">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
-                <input  type="text" name="nom"  type="text" id="userName" required placeholder="ex: Ahmed Bennani" 
-                    class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma" 
-                    class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-                <select id="userRole" name="role" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
-                    <option value="">Sélectionner un rôle</option>
-                    <option value="Professeur">Professeur</option>
-                    <option value="Étudiant">Étudiant</option>
-                    <option value="admin">admin</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
-                <div class="relative">
-                    <input type="password" id="userPassword" name="password" required placeholder="Minimum 8 caractères" 
-                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12"
-                        minlength="8">
+            <form action='managementUsers.php' id="userForm" class="space-y-4" method="POST">
+                <input type="hidden" id="userId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
+                    <input type="text" name="nom" type="text" id="userName" required placeholder="ex: Ahmed Bennani"
+                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                 </div>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
-                <div class="relative">
-                    <input type="password" id="userConfirmPassword" name="confirmpass" required placeholder="Répéter le mot de passe" 
-                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12">
-                    
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma"
+                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                 </div>
-                <p id="passwordMatchMessage" class="text-xs mt-1 hidden"></p>
-            </div>
-            <div class="flex space-x-3">
-                <button type="submit" name="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
-                    <i class="fa-solid fa-save mr-2"></i> Enregistrer
-                </button>
-                <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
-                    Annuler
-                </button>
-            </div>
-        </form>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
+                    <select id="userRole" name="role" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
+                        <option value="">Sélectionner un rôle</option>
+                        <option value="Professeur">Professeur</option>
+                        <option value="Étudiant">Étudiant</option>
+                        <option value="admin">admin</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+                    <div class="relative">
+                        <input type="password" id="userPassword" name="password" required placeholder="Minimum 8 caractères"
+                            class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12"
+                            minlength="8">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
+                    <div class="relative">
+                        <input type="password" id="userConfirmPassword" name="confirmpass" required placeholder="Répéter le mot de passe"
+                            class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition pr-12">
+
+                    </div>
+                    <p id="passwordMatchMessage" class="text-xs mt-1 hidden"></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button type="submit" name="submit" class="flex-1 bg-pink-600 text-white py-3 rounded-xl font-semibold hover:bg-pink-700 transition">
+                        <i class="fa-solid fa-save mr-2"></i> Enregistrer
+                    </button>
+                    <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                        Annuler
+                    </button>
+                </div>
+            </form>
         </div>
-</div>
+    </div>
 
     <!-- Toast notifications -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 space-y-3"></div>
 
     <script>
-function openUserModal(userId = null) {
+        function openUserModal(userId = null) {
             const modal = document.getElementById('userModal');
             const title = document.getElementById('modalTitle');
             const form = document.getElementById('userForm');
-            
+
             if (userId) {
                 const user = db.users.find(u => u.id === userId);
                 if (user) {
@@ -462,7 +520,7 @@ function openUserModal(userId = null) {
                 form.reset();
                 document.getElementById('userId').value = '';
             }
-            
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
@@ -472,9 +530,8 @@ function openUserModal(userId = null) {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-
-
     </script>
-    
+
 </body>
+
 </html>
