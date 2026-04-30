@@ -136,7 +136,7 @@ $users = getAllUsers($conn,"student");
                 </div>
             </div>
             <a href="#" class="flex items-center px-4 py-2 text-red-500 hover:bg-red-50 rounded-xl transition">
-                <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion
+                <a href="../logout.php"><i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion </a>
             </a>
         </div>
     </aside>
@@ -154,7 +154,7 @@ $users = getAllUsers($conn,"student");
                     <!-- Window Controls -->
                     <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg">
                         <button onclick="" class="p-2 hover:bg-red-100 rounded transition" title="Fermer">
-                            Log out
+                            <a href="../logout.php">Log out </a>
                         </button>
                     </div>
                 </div>
