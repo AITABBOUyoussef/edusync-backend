@@ -1,5 +1,7 @@
 <?php 
 function adduser($conn,$fullName,$Email,$password,$role){
+      $password = password_hash($password, PASSWORD_BCRYPT);
+          
     try {
     $sql = "INSERT INTO users (role,Email,password,nom) VALUES (?,?,?,?)  ";
     $stm=$conn->prepare($sql);
