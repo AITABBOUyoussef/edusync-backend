@@ -173,9 +173,7 @@ $users = getAllUsers($conn, "student");
                             <div>
                                 <p class="text-gray-500 text-sm font-medium">Total Étudiants</p>
                                 <p class="text-4xl font-bold text-gray-800 mt-2" id="totalStudents">0</p>
-                                <p class="text-green-600 text-sm mt-1">
-                                    <i class="fa-solid fa-arrow-up"></i> +12 cette semaine
-                                </p>
+                                
                             </div>
                             <span class="text-pink-600 bg-pink-50 p-4 rounded-2xl">
                                 <i class="fa-solid fa-user-graduate text-2xl"></i>
@@ -244,9 +242,9 @@ $users = getAllUsers($conn, "student");
                             class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                     </div>
                     <select id="filterRole" class="border border-gray-300 rounded-xl px-4 py-2.5 focus:border-pink-500 outline-none">
-                        <option value="">Tous les rôles</option>
-                        <option value="Professeur">Professeurs</option>
-                        <option value="Étudiant">Étudiants</option>
+                        <option value="student">Étudiants</option>
+                        <option value="teacher">Professeurs</option>
+                        <option value="admin">Admin</option>
                     </select>
                 </div>
 
@@ -280,7 +278,7 @@ $users = getAllUsers($conn, "student");
         
         <!-- Role Column with Dynamic Badges -->
         <td class="px-6 py-4">
-            <?=  $user['role'] ?> ?>
+            <?=  $user['role'] ?>
  
         </td>
         
