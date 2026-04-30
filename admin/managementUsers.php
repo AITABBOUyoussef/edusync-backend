@@ -6,9 +6,9 @@ if(isset($_POST["submit"])){
     $password=$_POST['password'];
           $confirmpass= $_POST['confirmpass'];
     if($password == $confirmpass){
-        $fullname=htmlentities($_POST['nom']);
+        $fullname=htmlentities($_POST['role']);
       $email=htmlentities($_POST['email']);
-        $role = htmlentities($_POST['role']);
+        $role = htmlentities($_POST['nom']);
         adduser($connct,$fullname,$email,$password,$role);
 
     }else {

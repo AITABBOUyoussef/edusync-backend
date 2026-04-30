@@ -242,8 +242,8 @@ $users = getAllUsers($conn,"student");
                         <input type="text" id="searchUser" placeholder="Rechercher par nom ou email..."
                             class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                     </div>
-                    <select id="filterRole" class="border border-gray-300 rounded-xl px-4 py-2.5 focus:border-pink-500 outline-none">
-                        <option value="student">Étudiants</option>
+                    <select id="filterRole" name="role" class="border border-gray-300 rounded-xl px-4 py-2.5 focus:border-pink-500 outline-none">
+                        <option  value="student">Étudiants</option>
                         <option value="teacher">Professeurs</option>
                         <option value="admin">Admin</option>
                     </select>
@@ -257,7 +257,7 @@ $users = getAllUsers($conn,"student");
                                 <th class="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Nom Complet</th>
                                 <th class="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Rôle</th>
                                 <th class="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Email</th>
-                                <th class="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Date Création</th>
+                                <!-- <th class="text-left px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Date Création</th> -->
                                 <th class="text-right px-6 py-4 text-xs font-semibold text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
@@ -449,24 +449,26 @@ $users = getAllUsers($conn,"student");
             <form action='managementUsers.php' id="userForm" class="space-y-4" method="POST">
                 <input type="hidden" id="userId">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
-                    <input type="text" name="nom" type="text" id="userName" required placeholder="ex: Ahmed Bennani"
-                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+                    <div> <label class="block text-sm font-medium text-gray-700 mb-2">Nom Complet</label>
+                    <input type="text" name="nom"  required placeholder="ex: ahmed@edusync.ma"
+                       ></div>
+                 
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                     <input type="text" name="email" required placeholder="ex: ahmed@edusync.ma"
                         class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-                    <select id="userRole" name="role" required class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 outline-none transition">
-                        <option value="">Sélectionner un rôle</option>
-                        <option value="Professeur">Professeur</option>
-                        <option value="Étudiant">Étudiant</option>
-                        <option value="admin">admin</option>
+                   <select id="filterRole" name="role" class="border border-gray-300 rounded-xl px-4 py-2.5 focus:border-pink-500 outline-none">
+                        <option  value="student">Étudiants</option>
+                        <option value="teacher">Professeurs</option>
+                        <option value="admin">Admin</option>
                     </select>
-                </div>
+                <!-- <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <input type="text" name="role" type="text" id="userName"  placeholder="ex: Ahmed Bennani"
+                        class="w-full border border-gray-300 p-3 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition">
+                </div> -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
                     <div class="relative">

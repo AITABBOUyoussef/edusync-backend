@@ -1,9 +1,9 @@
 <?php 
-function adduser($conn,$fullName,$Email,$password, $role){
+function adduser($conn,$fullName,$Email,$password,$role){
     try {
-    $sql = "INSERT INTO users (nom,Email,password,role) VALUES (?,?,?,?)  ";
+    $sql = "INSERT INTO users (role,Email,password,nom) VALUES (?,?,?,?)  ";
     $stm=$conn->prepare($sql);
-    $stm->execute([$fullName,$Email,$password, $role]);
+    $stm->execute([$fullName,$Email,$password,$role]);
     echo $role." added successfully";
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -52,7 +52,7 @@ function createCours($conn,$name,$description,$profid){
 
 function getAllUsers($conn,$role){
     try {
-        $sql = "SELECT id,nom,email FROM users WHERE role = ?";
+        $sql = "SELECT id,nom,email,role FROM users WHERE role = ?";
         $stm=$conn->prepare($sql);
         $stm->execute([$role]);
         $users= $stm->fetchAll();
