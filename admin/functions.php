@@ -49,9 +49,10 @@ function createCours($conn,$name,$description,$profid){
             echo $e->getMessage();
     }
 }
+
 function getAllUsers($conn,$role){
     try {
-        $sql = "SELECT id,nom,email,role FROM users WHERE role = ?";
+        $sql = "SELECT id,nom,email FROM users WHERE role = ?";
         $stm=$conn->prepare($sql);
         $stm->execute([$role]);
         $users= $stm->fetchAll();

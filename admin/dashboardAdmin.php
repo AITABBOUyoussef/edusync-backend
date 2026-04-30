@@ -91,7 +91,8 @@
 include 'functions.php';
 include 'connectDB.php';
 $conn = ConnectionDb();
-$users = getAllUsers($conn, "student");
+// $role = $_SESSION['role'] ;
+$users = getAllUsers($conn,"student");
 
 
 

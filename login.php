@@ -39,7 +39,7 @@ $email = trim($_POST["email"]);
             $_SESSION['role'] = $sel_user->role;
 
             if($_SESSION['role']==='admin'){
-                header('Location: admin/index.php');
+                header('Location: admin/dashboardAdmin.php');
             }
             elseif($_SESSION['role']==='teacher'){
                 header('Location: teacher/index.php');
